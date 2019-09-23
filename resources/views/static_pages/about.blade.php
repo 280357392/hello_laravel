@@ -4,6 +4,6 @@
   <title>Weibo App</title>
 </head>
 <body>
-  <h1>帮助</h1>
+  <h1>关于</h1>
 </body>
 </html>

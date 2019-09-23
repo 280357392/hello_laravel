@@ -1,7 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: mengwei
- * Date: 2019/9/23
- * Time: 9:52 AM
- */
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weibo App</title>
+</head>
+<body>
+  <h1>主页</h1>
+</body>
+</html>
