@@ -7,7 +7,7 @@
             你现在所看到的是 Laravel 项目主页。
         </p>
         <p>
-            <a class="btn btn-lg btn-success" href="#" role="button">现在注册</a>
+            <a class="btn btn-lg btn-success" href="{{route('signup')}}" role="button">现在注册</a>
         </p>
     </div>
 @stop
