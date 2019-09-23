@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title','主页标题哈')
+@section('title','主页')
 @section('content')
-  <p>主页666</p>
+  <p>主页</p>
 @stop
