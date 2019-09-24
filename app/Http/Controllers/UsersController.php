@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 //表名称+Controller
 class UsersController extends Controller
 {
-    //
+    //显示注册页面
     public function create(){
-        //显示注册页面
         return view('users.create');
     }
 
@@ -18,6 +17,38 @@ class UsersController extends Controller
     public function show(User $user){
         //$user 查询对象
         return view('users.show',compact('user'));
+    }
+
+    //post 处理注册表单数据
+    //使用该参数$request来获得用户的所有输入数据
+    public function store(Request $request)
+    {
+        /*
+        中文提示：
+                1.下载：
+                    $ composer require "overtrue/laravel-lang:~3.0"
+                2.修改config/app.php：
+                    Illuminate\Translation\TranslationServiceProvider::class,
+                    替换为：
+                    Overtrue\LaravelLang\TranslationServiceProvider::class,
+                    return [
+                     .
+                     'locale' => 'zh-CN',
+                     .
+                    ];
+                3.配置缓存重新加载：$ php artisan config:cache
+                4.属性或者验证消息改写：
+                    resources/lang/zh-CN/validation.php 中编写你需要定制的部分即可
+         */
+
+        //第一个参数为用户的输入数据，第二个参数为该输入数据的验证规则。
+        //如果验证不通过，终止运行当前方法，会刷新当前页，并显示错误提示
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        return;
     }
 
 }
