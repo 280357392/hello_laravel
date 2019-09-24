@@ -9,14 +9,16 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     //显示注册页面
-    public function create(){
+    public function create()
+    {
         return view('users.create');
     }
 
     // get /users/{user}  变量名匹配路由片段
-    public function show(User $user){
+    public function show(User $user)
+    {
         //$user 查询对象
-        return view('users.show',compact('user'));
+        return view('users.show', compact('user'));
     }
 
     //post 处理注册表单数据
@@ -48,7 +50,20 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6'
         ]);
-        return;
-    }
 
+        //数据验证通过后
+        //将用户提交的信息存储到数据库
+        //创建成功后会返回一个用户对象
+        $user = User::create(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]
+        );
+
+        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        //重定向到users.show
+        return redirect()->route('users.show', [$user]);
+    }
 }
