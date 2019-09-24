@@ -14,6 +14,7 @@ class UsersController extends Controller
         return view('users.create');
     }
 
+    //显示用户信息
     // get /users/{user}  变量名匹配路由片段
     public function show(User $user)
     {
