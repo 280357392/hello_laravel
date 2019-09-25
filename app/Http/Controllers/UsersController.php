@@ -9,6 +9,21 @@ use Auth;
 //表名称+Controller
 class UsersController extends Controller
 {
+    // PHP 的构造器方法
+    public function __construct()
+    {
+        //middleware 方法，该方法接收两个参数，第一个为中间件的名称，第二个为要进行过滤的动作
+        //除了此处指定的动作以外，其他动作都必须登录用户才能访问
+        //如该用户未通过身份验证（未登录用户），默认将会被重定向到 /login 登录页面。
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store']//这些是不需要登录就可以访问的
+        ]);
+        //guest 属性进行设置，只让未登录用户访问登录页面和注册页面
+        $this->middleware('guest', [
+            'only' => ['create']//未登录时才能访问
+        ]);
+    }
+
     //首页点击'注册'按钮 -> 执行create方法显示注册页面
     public function create()
     {
@@ -78,12 +93,16 @@ class UsersController extends Controller
     //个人信息编辑界面
     public function edit(User $user)
     {
+        //登录用户禁止更新其它用户的个人信息
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     //update 动作来处理用户提交的个人信息。
     public function update(User $user, Request $request)
     {
+        //登录用户禁止更新其它用户的个人信息
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
