@@ -16,7 +16,7 @@ class UsersController extends Controller
         //除了此处指定的动作以外，其他动作都必须登录用户才能访问
         //如该用户未通过身份验证（未登录用户），默认将会被重定向到 /login 登录页面。
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']//这些是不需要登录就可以访问的
+            'except' => ['show', 'create', 'store', 'index']//这些是不需要登录就可以访问的
         ]);
         //guest 属性进行设置，只让未登录用户访问登录页面和注册页面
         $this->middleware('guest', [
@@ -128,4 +128,11 @@ class UsersController extends Controller
         return redirect()->route('users.show', $user);
     }
 
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
+    }
 }

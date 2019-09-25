@@ -6,7 +6,7 @@
         <h2 class="mb-4 text-center">所有用户</h2>
         <div class="list-group list-group-flush">
             @foreach ($users as $user)
-                //list item
+                {{--list item--}}
                 @include('users._user')
             @endforeach
         </div>
