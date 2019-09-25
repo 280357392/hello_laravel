@@ -24,6 +24,13 @@ class UsersController extends Controller
         ]);
     }
 
+    //显示所有数据
+    public function index()
+    {
+        $users = User::paginate(5);
+        return view('users.index', compact('users'));
+    }
+
     //首页点击'注册'按钮 -> 执行create方法显示注册页面
     public function create()
     {
